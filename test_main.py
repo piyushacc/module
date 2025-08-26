@@ -21,3 +21,12 @@ def test_classify_triangle(a, b, c, expected):
 def test_calculate_discounted_price(price, discount, expected):
     assert calculate_discounted_price(price, discount) == expected
 
+@pytest.mark.parametrize("price,discount", [
+    (-1, 10),    # negative price triggers ValueError
+    (100, -5),   # negative discount triggers ValueError
+    (100, 150),  # discount > 100 triggers ValueError
+])
+def test_calculate_discounted_price_invalid(price, discount):
+    with pytest.raises(ValueError):
+        calculate_discounted_price(price, discount)
+
